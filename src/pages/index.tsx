@@ -1,11 +1,12 @@
-import { useState } from 'react'
+import { FeatureVariable } from '@moveinc/rdc-app-context/lib/FeatureFlagContext/optimizely/createOptimizely'
+import { ReactElement, useState } from 'react'
 import { useFeatureFlag } from '@moveinc/rdc-app-context'
 
-function Header ({ title }) {
-  return <h1>{title || 'Default title'}</h1>
+function Header ({ title }): ReactElement {
+  return <h1>{title ?? 'Default title'}</h1>
 }
 
-export default function HomePage () {
+export default function HomePage (): ReactElement {
   const values = [
     'People are our foundation',
     'Consumers are our north star',
@@ -15,11 +16,11 @@ export default function HomePage () {
 
   const [likes, setLikes] = useState(0)
   const { getFeatureVariables } = useFeatureFlag()
-  const featureVariables = getFeatureVariables('CCX_HP_EXPO_TEST')
+  const featureVariables: FeatureVariable = getFeatureVariables('CCX_HP_EXPO_TEST')
   const { isEnabled, variables } = featureVariables
   const variation = variables?.Variation
 
-  function handleClick () {
+  function handleClick (): void {
     setLikes(likes + 1)
   }
 
@@ -32,7 +33,7 @@ export default function HomePage () {
         ))}
       </ul>
       {
-        isEnabled && variation === 'V1'
+        isEnabled === true && variation === 'V1'
           ? <a href={variation}>link {variation}</a>
           : <button onClick={handleClick}>{variation} Like ({likes})</button>
       }

@@ -1,8 +1,9 @@
 import { FeatureFlagContextProvider, getFeatureFlagProps, initializeFeatureFlags } from '@moveinc/rdc-app-context'
 import { OptimiezelyProjects } from '@moveinc/rdc-app-context/lib/FeatureFlagContext/optimizely/projects'
 import App from 'next/app'
+import { ReactElement } from 'react'
 
-const MyApp = ({ Component, featureFlagProps }) => {
+const MyApp = ({ Component, featureFlagProps }): ReactElement => {
   return (
     <FeatureFlagContextProvider {...featureFlagProps}>
       <Component />
@@ -13,7 +14,7 @@ const MyApp = ({ Component, featureFlagProps }) => {
 MyApp.getInitialProps = async (appContext) => {
   const { ctx } = appContext
   const { req, res } = ctx
-  const isServer = req && res
+  const isServer = Boolean(req ?? res)
 
   if (isServer) {
     await initializeFeatureFlags({
