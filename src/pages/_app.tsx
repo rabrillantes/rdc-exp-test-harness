@@ -1,5 +1,5 @@
 import { FeatureFlagContextProvider, getFeatureFlagProps, initializeFeatureFlags } from '@moveinc/rdc-app-context'
-import { OptimiezelyProjects } from '@moveinc/rdc-app-context/lib/FeatureFlagContext/optimizely/projects'
+import { OptimizelyEnvs, OptimizelyProjects } from '@moveinc/rdc-optimizely';
 import App from 'next/app'
 import { ReactElement } from 'react'
 
@@ -19,8 +19,8 @@ MyApp.getInitialProps = async (appContext) => {
   if (isServer) {
     await initializeFeatureFlags({
       timeout: 1000,
-      project: OptimiezelyProjects.RDCX,
-      env: 'development',
+      project: OptimizelyProjects.RDCX,
+      env: OptimizelyEnvs.DEVELOPMENT,
       logger: console,
       userId: res.locals?.vst,
       ctx
